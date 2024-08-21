@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URL")
+}
+
+model Prompt {
+  id        String  @id @default(cuid()) @map("_id")
+  creator   User?   @relation(fields: [creatorId], references: [id])
+  creatorId String?
+  prompt    String
+  chatURL   String
+  tag       String
+}
+
+model User {
+  id       String   @id @default(cuid()) @map("_id")
+  email    String   @unique
+  username String
+  image    String?
+  prompts  Prompt[]
+}
