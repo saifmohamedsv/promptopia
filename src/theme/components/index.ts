@@ -5,6 +5,7 @@ import { Link } from "./link";
 import { Container } from "./container";
 import { Textarea } from "./textarea";
 import { Input } from "./input";
+import { Select } from "./select";
 
 export const components = {
   Button,
@@ -14,4 +15,5 @@ export const components = {
   Link,
   Container,
   Input,
+  Select,
 };

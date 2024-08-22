@@ -1,4 +1,4 @@
-import { Feed } from "@/components/common";
+import { Feed } from ".";
 
 export function HomePage() {
   return (

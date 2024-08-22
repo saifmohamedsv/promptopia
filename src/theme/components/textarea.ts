@@ -7,7 +7,9 @@ export const Textarea = defineStyleConfig({
   baseStyle: {
     fontWeight: "medium",
     fontSize: 14,
-    borderRadius: borders.radii.base,
+    borderRadius: borders.radii.xs,
+    border: borders.borders[2],
+    borderColor: "transparent",
     shadow: shadow.shadows["card-base"],
     padding: spacing.space["3"],
   },
@@ -16,11 +18,9 @@ export const Textarea = defineStyleConfig({
       bg: "white",
       color: "gray.500",
       _focus: {
-        border: borders.borders[2],
         borderColor: "primary.100",
       },
       _invalid: {
-        border: borders.borders[2],
         borderColor: "red",
         _placeholder: {
           color: "red.500",

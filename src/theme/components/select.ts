@@ -3,16 +3,15 @@ import { spacing } from "../spacing";
 import { shadow } from "../shadow";
 import { borders } from "../borders";
 
-export const Input = defineStyleConfig({
+export const Select = defineStyleConfig({
   baseStyle: {
     field: {
       fontWeight: "medium",
       fontSize: 14,
       borderRadius: borders.radii.xs,
+      shadow: shadow.shadows["card-base"],
       border: borders.borders[2],
       borderColor: "transparent",
-      shadow: shadow.shadows["card-base"],
-      padding: spacing.space["3"],
     },
   },
   variants: {
@@ -26,7 +25,7 @@ export const Input = defineStyleConfig({
         _invalid: {
           borderColor: "red",
           _placeholder: {
-            color: "red.500",
+            color: "red.200",
           },
         },
       },

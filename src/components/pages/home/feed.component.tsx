@@ -1,19 +1,27 @@
 "use client";
 
 import { PromptCard } from "@/components/prompt";
-import { useState } from "react";
 import type { Prompt } from "@prisma/client";
 import type { Prompt as ClientPrompt } from "@/types/prompt";
 import { Input } from "@chakra-ui/react";
 import { usePrompts } from "@/hooks";
-import { Loader } from "./loader";
+import { useRouter } from "next/navigation";
+import { Loader } from "@/components/common";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export function Feed() {
-  const [searchText, setSearchText] = useState("");
-  const { prompts, loading } = usePrompts(searchText);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { prompts, loading } = usePrompts();
+  const term = searchParams.get("term");
+
+  const [searchValue, setSearchValue] = useState(term || "");
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+    const searchTerm = e.target.value;
+    setSearchValue(searchTerm);
+    router.push(`/?term=${searchTerm}`);
   };
 
   const renderPrompts = () => {
@@ -36,14 +44,12 @@ export function Feed() {
 
   return (
     <section className="feed">
-      <form className="relative w-full flex-center">
-        <Input
-          type="text"
-          placeholder="Search using a prompt, tag or a username"
-          value={searchText}
-          onChange={handleSearchChange}
-        />
-      </form>
+      <Input
+        type="text"
+        placeholder="Search using a prompt, tag or a username"
+        value={searchValue}
+        onChange={handleSearchChange}
+      />
       {renderPrompts()}
     </section>
   );

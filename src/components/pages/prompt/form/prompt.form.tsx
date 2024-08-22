@@ -6,7 +6,8 @@ import { Formik } from "formik";
 import { PromptFormFields, type PromptFormValues } from "./prompt.form.types";
 import { Link } from "@chakra-ui/next-js";
 import { VStack } from "@chakra-ui/react";
-import { FormField } from "@/components/form";
+import { FormField, FormSelect } from "@/components/form";
+import { promptCategoriesList } from "@/constants/prompt-categories";
 
 interface Props {
   prompt?: Prompt;
@@ -61,14 +62,19 @@ export function PromptForm({ action, prompt }: Props) {
               name={PromptFormFields.CHAT_URL}
               placeholder="Paste a chat link."
             />
-            <FormField
-              as="input"
-              label="Tag"
-              name={PromptFormFields.TAG}
-              placeholder="e.g #excel, #software"
-            />
-          </VStack>
 
+            <FormSelect
+              name={PromptFormFields.TAG}
+              label="Select a category"
+              placeholder="Choose an option"
+            >
+              {promptCategoriesList.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </FormSelect>
+          </VStack>
           <div className="flex-end mx-3 mb-5 gap-4">
             <Link href="/" color="gray.400" _hover={{ color: "gray.600" }}>
               Cancel
