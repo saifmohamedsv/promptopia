@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export const Loader = ({ size = 48 }) => {
+export const Loader = ({ size = 48 }: {size?: number}) => {
   return (
     <Image
       src={"/assets/icons/loader.svg"}
