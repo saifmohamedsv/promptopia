@@ -4,9 +4,9 @@ import { PromptCard } from "@/components/prompt";
 import { Input } from "@chakra-ui/react";
 import { usePrompts } from "@/hooks";
 import { Loader } from "@/components/ui";
-import type { Prompt as ClientPrompt } from "@/types/prompt";
-import type { Prompt } from "@prisma/client";
 import { useSearchInput } from "@/hooks/use-search-input.hook";
+import type { Prompt } from "@prisma/client";
+import type { Prompt as ClientPrompt } from "@/types/prompt";
 
 export function Feed() {
   const { handleSearchChange, searchTerm } = useSearchInput(500);
@@ -17,7 +17,7 @@ export function Feed() {
       return <Loader />;
     }
 
-    if (!prompts.length) {
+    if (!prompts.length && !loading) {
       return <h1 className="my-24">No prompts found.</h1>;
     }
 

@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { fetchPrompts } from "@/actions/prompt";
-import type { Prompt } from "@prisma/client";
 import { useSearchParams } from "next/navigation";
+import type { Prompt } from "@prisma/client";
 
 export function usePrompts() {
   const [prompts, setPrompts] = useState<Prompt[]>([]);
