@@ -78,7 +78,7 @@ export function Navbar({ authProviders }: { authProviders: React.ReactNode }) {
                   className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >
-                  Create Post
+                  Share Prompt
                 </Link>
 
                 <button
