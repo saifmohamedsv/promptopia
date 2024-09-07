@@ -7,6 +7,7 @@ export const Loader = ({ size = 48 }: { size?: number }) => {
       width={size}
       height={size}
       alt="Promptopia Loader"
+      className="my-12"
     />
   );
 };
