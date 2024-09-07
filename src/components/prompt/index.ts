@@ -1,1 +1,1 @@
-export * from "./prompt-card.component";
+export * from "./prompt-card";

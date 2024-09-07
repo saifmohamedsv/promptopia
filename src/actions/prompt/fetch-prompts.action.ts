@@ -14,7 +14,7 @@ export async function fetchPrompts(searchText?: string) {
             },
           },
         ],
-      } 
+      }
     : {};
 
   return prisma.prompt.findMany({

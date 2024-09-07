@@ -1,27 +1,29 @@
 "use client";
 
 import { PromptCard } from "@/components/prompt";
-import type { Prompt } from "@prisma/client";
-import type { Prompt as ClientPrompt } from "@/types/prompt";
 import { Input } from "@chakra-ui/react";
 import { usePrompts } from "@/hooks";
-import { useRouter } from "next/navigation";
-import { Loader } from "@/components/common";
 import { useSearchParams } from "next/navigation";
+import { Loader } from "@/components/ui";
 import { useState } from "react";
+import { debounce } from "@/lib/utils";
+import type { Prompt as ClientPrompt } from "@/types/prompt";
+import type { Prompt } from "@prisma/client";
+import { useOnFilterChange } from "@/hooks/filters";
 
 export function Feed() {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const { prompts, loading } = usePrompts();
-  const term = searchParams.get("term");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const [searchValue, setSearchValue] = useState(term || "");
+  const term = searchParams.get("term")
+    ? (searchParams.get("term") as string)
+    : undefined;
+
+  const { prompts, loading, refetch } = usePrompts();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.target.value;
-    setSearchValue(searchTerm);
-    router.push(`/?term=${searchTerm}`);
+    const term = e.target.value as string;
+    setSearchTerm(term);
   };
 
   const renderPrompts = () => {
@@ -47,7 +49,7 @@ export function Feed() {
       <Input
         type="text"
         placeholder="Search using a prompt, tag or a username"
-        value={searchValue}
+        value={searchTerm}
         onChange={handleSearchChange}
       />
       {renderPrompts()}

@@ -1,8 +1,8 @@
 import "./globals.css";
-import { Navbar, NavbarAuthProviders } from "@/components/common/navbar";
 import { fonts } from "./fonts";
 import { ThemeProvider } from "@/theme/theme.provider";
 import { AuthProvider } from "@/components/providers";
+import { Navbar, NavbarAuthProviders } from "@/components/ui/navbar";
 
 export const metadata = {
   title: "Promptopia",
@@ -14,7 +14,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   return (
     <html lang="en" className={fonts.inter.variable}>
       <body>

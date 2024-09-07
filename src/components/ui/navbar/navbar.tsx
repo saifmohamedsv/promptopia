@@ -26,7 +26,7 @@ export function Navbar({ authProviders }: { authProviders: React.ReactNode }) {
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href={"/prompt"} className="black_btn">
-              Create Post
+              Share Prompt
             </Link>
             <button
               type="button"

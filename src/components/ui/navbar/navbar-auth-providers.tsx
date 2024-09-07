@@ -1,6 +1,6 @@
-import { getProviders, signIn, type ClientSafeProvider } from "next-auth/react";
+import { getProviders } from "next-auth/react";
 import { Loader } from "../loader";
-import { AuthProviderButton } from "./navbar-auth-provider-button.component";
+import { AuthProviderButton } from ".";
 
 interface NavbarAuthProvidersProps {}
 

@@ -1,5 +1,5 @@
-import { Loader } from "@/components/common";
 import { PromptCard } from "@/components/prompt";
+import { Loader } from "@/components/ui";
 import type { Prompt } from "@/types/prompt";
 import type { User } from "@prisma/client";
 
