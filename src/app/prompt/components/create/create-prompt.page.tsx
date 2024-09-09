@@ -1,6 +1,6 @@
 "use client";
 
-import { PromptForm } from "../form/prompt.form";
+import { PromptForm } from "../form";
 import { createPrompt } from "@/actions/prompt";
 
 export default function CreatePromptPage() {

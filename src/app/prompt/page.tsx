@@ -1,3 +1,3 @@
-import CreatePromptPage from "@/components/pages/prompt/create/create-prompt.page";
+import CreatePromptPage from "./components/create/create-prompt.page";
 
 export default CreatePromptPage;

@@ -1,5 +1,5 @@
 import { fetchUserPromptsById, getUserById } from "@/actions/user";
-import { ProfilePage } from "@/components/pages/profile/profile.page";
+import { ProfilePage } from "../components/profile.page";
 import type { Prompt } from "@/types/prompt";
 
 interface Props {

@@ -21,7 +21,10 @@ export default async function EditPromptPage({
         Create and share amazing prompts with the world
       </p>
 
-      <PromptForm prompt={prompt as Prompt} action={editPrompt} />
+      <PromptForm
+        prompt={prompt as Prompt}
+        action={editPrompt}
+      />
     </section>
   );
 }

@@ -24,11 +24,13 @@ const PromptFormSchema = Yup.object().shape({
 
 export function PromptForm({ action, prompt }: Props) {
   const initialValues = {
-    [PromptFormFields.ID]: prompt?.id || "",
+    ...(prompt?.id ? { [PromptFormFields.ID]: prompt?.id } : {}),
     [PromptFormFields.PROMPT]: prompt?.prompt || "",
     [PromptFormFields.CHAT_URL]: prompt?.chatURL || "",
     [PromptFormFields.TAG]: prompt?.tag || "",
   };
+
+  console.log(initialValues);
 
   return (
     <Formik
