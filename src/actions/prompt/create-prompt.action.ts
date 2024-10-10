@@ -3,7 +3,7 @@
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
-import type { PromptFormValues } from "@/components/pages/prompt/form/prompt.form.types";
+import { PromptFormValues } from "@/types/prompt";
 
 export const createPrompt = async (values: PromptFormValues) => {
   const session = await getSession();
