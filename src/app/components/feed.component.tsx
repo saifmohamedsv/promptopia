@@ -9,8 +9,8 @@ import type { Prompt } from "@prisma/client";
 import type { Prompt as ClientPrompt } from "@/types/prompt";
 
 export function Feed() {
-  const { handleSearchChange, searchTerm } = useSearchInput(500);
-  const { prompts, loading } = usePrompts();
+  const { searchTerm, handleSearchChange, debouncedSearchTerm } = useSearchInput(1000);
+  const { prompts, loading } = usePrompts(debouncedSearchTerm);
 
   const renderPrompts = () => {
     if (loading) {
