@@ -5,8 +5,8 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { CopyButton } from "../copy-button";
-import { Box, Text } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { Box, Text, Flex, Avatar, Tag, Link, IconButton, useColorModeValue } from "@chakra-ui/react";
+import { ExternalLinkIcon, EditIcon, DeleteIcon, ChatIcon } from "@chakra-ui/icons";
 
 interface Props {
   prompt: Prompt;
@@ -28,106 +28,88 @@ export function PromptCard({ prompt }: Props) {
     tag,
   } = prompt;
 
-  const trimmedPrompt =
-    promptContent.length > 200
-      ? promptContent.slice(0, 200) + "..."
-      : promptContent;
-
+  const trimmedPrompt = promptContent.length > 200 ? promptContent.slice(0, 200) + "..." : promptContent;
   const trimmedEmail = email.length > 18 ? email.slice(0, 19) + "..." : email;
 
-  const handleCategoryClick = (category: string) =>
-    router.push(`/?term=${category}`);
+  const handleCategoryClick = (category: string) => router.push(`/?term=${category}`);
 
   return (
-    <div className="prompt_card">
-      <Box
-        width={"100%"}
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"flex-start"}
-        gap={5}
-      >
-        <div
+    <Flex
+      direction="column"
+      bg="white"
+      borderRadius="2xl"
+      p={6}
+      boxShadow="lg"
+      borderWidth={1}
+      borderColor="neutral.200"
+      transition="all 0.3s"
+      _hover={{ transform: "translateY(-5px)", boxShadow: "xl" }}
+      height="100%"
+    >
+      <Flex justifyContent="space-between" alignItems="flex-start" mb={4}>
+        <Flex
           onClick={() => !isCreator && router.push(`/profile/${creatorId}`)}
-          className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
+          alignItems="center"
+          cursor={!isCreator ? "pointer" : "default"}
         >
-          <Image
-            src={image}
-            width={40}
-            height={40}
-            loading="lazy"
-            lazyBoundary="loading"
-            alt="user_image"
-            className="rounded-full object-contain"
-          />
-
-          <div className="flex flex-col">
-            <h3
-              title={email}
-              className="font-satoshi font-semibold text-gray-900 text-md"
-            >
+          <Avatar src={image} size="md" mr={3} />
+          <Box>
+            <Text fontWeight="bold" color="neutral.800" title={email}>
               {trimmedEmail}
-            </h3>
-            <p className="font-inter text-sm text-gray-500">{username}</p>
-          </div>
-        </div>
-
+            </Text>
+            <Text fontSize="sm" color="neutral.500">
+              {username}
+            </Text>
+          </Box>
+        </Flex>
         <CopyButton textToCopy={promptContent} />
-      </Box>
+      </Flex>
 
-      <p className="flex-1 mt-4 font-satoshi max-w-full break-words text-wrap text-md text-gray-700">
+      <Text fontSize="lg" fontWeight="medium" mb={4} color="neutral.700" noOfLines={3} flex="1">
         {trimmedPrompt}
-      </p>
+      </Text>
 
-      <Box
-        mt={4}
-        width={"100%"}
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        flexWrap={"wrap"}
-      >
-        <Text
-          fontSize={"sm"}
-          fontWeight={"semibold"}
-          color={"blue.500"}
-          cursor="pointer"
-          onClick={() => handleCategoryClick(tag)}
-        >
-          {tag.toLowerCase().replaceAll(" ", "_")}
-        </Text>
-        <Text fontSize={"xs"} color={"primary.500"}>
-          <a
-            target="_blank"
+      <Box mt="auto">
+        <Flex justifyContent="space-between" alignItems="center" mb={4}>
+          <Tag
+            size="md"
+            variant="subtle"
+            colorScheme="accent"
+            borderRadius="full"
+            px={3}
+            py={1}
+            cursor="pointer"
+            onClick={() => handleCategoryClick(tag)}
+          >
+            #{tag.toLowerCase().replaceAll(" ", "_")}
+          </Tag>
+          <IconButton
+            as={Link}
             href={chatURL}
-            className="cursor-pointer flex items-center gap-1"
-          >
-            Go to chat
-            <ExternalLinkIcon />
-          </a>
-        </Text>
-      </Box>
+            isExternal
+            aria-label="Go to chat"
+            icon={<ChatIcon />}
+            size="sm"
+            colorScheme="brand"
+            variant="ghost"
+          />
+        </Flex>
 
-      {isCreator && pathname === "/profile" && (
-        <Box
-          mt={5}
-          gap={4}
-          pt={3}
-          className="flex-center border-t border-gray-100 "
-        >
-          <Text
-            size={"sm"}
-            cursor={"pointer"}
-            className="green_gradient"
-            onClick={() => router.push(`/prompt/${id}`)}
-          >
-            Edit
-          </Text>
-          <Text size={"sm"} cursor={"pointer"} className="orange_gradient">
-            Delete
-          </Text>
-        </Box>
-      )}
-    </div>
+        {isCreator && pathname === "/profile" && (
+          <Flex mt={4} justifyContent="flex-end">
+            <IconButton
+              aria-label="Edit prompt"
+              icon={<EditIcon />}
+              size="sm"
+              variant="ghost"
+              colorScheme="blue"
+              mr={2}
+              onClick={() => router.push(`/prompt/${prompt.id}`)}
+            />
+            <IconButton aria-label="Delete prompt" icon={<DeleteIcon />} size="sm" variant="ghost" colorScheme="red" />
+          </Flex>
+        )}
+      </Box>
+    </Flex>
   );
 }

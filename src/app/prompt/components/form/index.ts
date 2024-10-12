@@ -1,2 +1,1 @@
-export * from './prompt.form'
-export * from './prompt.form.types'
+export * from "./prompt.form";

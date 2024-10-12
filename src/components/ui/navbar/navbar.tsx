@@ -4,100 +4,48 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
+import { Box, Flex, Button, Link as ChakraLink, useColorModeValue, Text } from "@chakra-ui/react";
 
 export function Navbar({ authProviders }: { authProviders: React.ReactNode }) {
   const { data: session } = useSession();
-  const [toggleDropdown, setToggleDropdown] = useState(false);
+  const bgColor = useColorModeValue("rgba(255, 255, 255, 0.8)", "rgba(26, 32, 44, 0.8)");
+  const borderColor = useColorModeValue("rgba(226, 232, 240, 0.5)", "rgba(74, 85, 104, 0.5)");
 
   return (
-    <nav className="flex-between w-full mb-16 pt-3">
-      <Link className="flex gap-2 flex-center" href={"/"}>
-        <Image
-          src={"/assets/images/logo.svg"}
-          alt="Promptopia Logo"
-          width={32}
-          height={32}
-        />
-        <p className="logo_text">Promptopia</p>
-      </Link>
-
-      {/* Desktop Navigation */}
-      <div className="sm:flex hidden">
-        {session?.user ? (
-          <div className="flex gap-3 md:gap-5">
-            <Link href={"/prompt"} className="black_btn">
-              Share Prompt
-            </Link>
-            <button
-              type="button"
-              className="outline_btn"
-              onClick={() => signOut()}
+    <Box
+      as="nav"
+      bg={bgColor}
+      py={4}
+      borderBottom={1}
+      borderStyle="solid"
+      borderColor={borderColor}
+      boxShadow="sm"
+      position="sticky"
+      top={0}
+      zIndex={100}
+      backdropFilter="blur(10px)"
+    >
+      <Flex maxW="container.xl" mx="auto" alignItems="center" justifyContent="space-between">
+        <ChakraLink as={Link} href="/" _hover={{ textDecoration: "none" }}>
+          <Flex alignItems="center">
+            <Text
+              fontSize="2xl"
+              fontWeight="bold"
+              bgGradient="linear(to-r, brand.500, accent.500)"
+              bgClip="text"
+              ml={2}
             >
-              Sign Out
-            </button>
-            <Link href={"/profile"}>
-              <Image
-                src={session.user.image || ""}
-                width={37}
-                height={37}
-                className="rounded-full"
-                alt="profile"
-              />
-            </Link>
-          </div>
-        ) : (
-          <>{authProviders}</>
-        )}
-      </div>
-
-      {/* Mobile Navigation */}
-      <div className="sm:hidden flex relative">
-        {session?.user ? (
-          <div className="flex">
-            <Image
-              src={session.user.image || ""}
-              width={37}
-              height={37}
-              className="rounded-full"
-              alt="profile"
-              onClick={() => setToggleDropdown((prev) => !prev)}
-            />
-
-            {toggleDropdown && (
-              <div className="dropdown">
-                <Link
-                  href="/profile"
-                  className="dropdown_link"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  My Profile
-                </Link>
-
-                <Link
-                  href="/prompt"
-                  className="dropdown_link"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  Share Prompt
-                </Link>
-
-                <button
-                  className="black_btn w-full mt-5"
-                  onClick={() => {
-                    setToggleDropdown(false);
-                    signOut();
-                  }}
-                  type="button"
-                >
-                  Sign Out
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <>{authProviders}</>
-        )}
-      </div>
-    </nav>
+              Promptopia
+            </Text>
+          </Flex>
+        </ChakraLink>
+        <Flex alignItems="center">
+          <Button as={Link} href="/prompt" colorScheme="brand" me={4} size="md">
+            Create Prompt
+          </Button>
+          {!session?.user && <>{authProviders}</>}
+        </Flex>
+      </Flex>
+    </Box>
   );
 }
