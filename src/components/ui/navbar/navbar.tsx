@@ -1,10 +1,21 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
-import { Box, Flex, Button, Link as ChakraLink, useColorModeValue, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Button,
+  Link as ChakraLink,
+  useColorModeValue,
+  Text,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Avatar,
+} from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 export function Navbar({ authProviders }: { authProviders: React.ReactNode }) {
   const { data: session } = useSession();
@@ -40,10 +51,29 @@ export function Navbar({ authProviders }: { authProviders: React.ReactNode }) {
           </Flex>
         </ChakraLink>
         <Flex alignItems="center">
-          <Button as={Link} href="/prompt" colorScheme="brand" me={4} size="md">
-            Create Prompt
-          </Button>
-          {!session?.user && <>{authProviders}</>}
+          {session?.user ? (
+            <>
+              <Button as={Link} href="/prompt" colorScheme="brand" me={4} size="md">
+                Create Prompt
+              </Button>
+              <Menu>
+                <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                  <Avatar size="sm" src={session.user.image || undefined} name={session.user.name || undefined} />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem as={Link} href="/favorites">
+                    Favorites
+                  </MenuItem>
+                  <MenuItem as={Link} href="/profile">
+                    My Profile
+                  </MenuItem>
+                  <MenuItem onClick={() => signOut()}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            </>
+          ) : (
+            <>{authProviders}</>
+          )}
         </Flex>
       </Flex>
     </Box>
